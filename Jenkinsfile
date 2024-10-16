@@ -27,25 +27,25 @@ pipeline {
       steps {
         script {
           // Ensure Docker builds the image with the correct context and tag
-          def app = docker.build("amalan01/snakegame1:latest", ".")
+          def app = docker.build("amalan01/snakegame1")
+          app.tag("latest")
         }
       }
     }
 
-    stage('POST-TO-DOCKERHUB') {
-      agent {
-        label 'ubuntu-Appserver-3120'
-      }
-      steps {
-        script {
-          // Login and push to Docker Hub
-          docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_credentials') {
-            def app = docker.image("amalan01/snakegame1:latest")
-            app.push()
-          }
+    stage('POST-TO-DOCKERHUB') {    
+            agent {
+                label 'App-Server-CWEB2140'
+            }
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_credentials') {
+                        def app = docker.image("amalan01/snakegame1")
+                        app.push("latest")
+                    }
+                }
+            }
         }
-      }
-    }
 
     stage('DEPLOYMENT') {
       agent {
