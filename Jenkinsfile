@@ -1,7 +1,6 @@
 pipeline {
    agent none
-   def app
-   
+
    stages {
      stage('CLONE GIT REPOSITORY') {
        agent {
@@ -27,8 +26,9 @@ pipeline {
        }
        steps {
          script {
-           // Build the Docker image with the correct context and tag
-           app = docker.build("amalan01/snakegame1:latest", ".")
+           // Declare and build the Docker image with the correct context and tag
+           def app = docker.build("amalan01/snakegame1:latest", ".")
+           app.tag("latest")
          }
        }
      }
@@ -41,7 +41,8 @@ pipeline {
          script {
            docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_credentials') {
              // Push the previously built image
-             app.push("latest")
+             def app = docker.image("amalan01/snakegame1:latest")
+             app.push()
            }
          }
        }
