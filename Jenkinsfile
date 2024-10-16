@@ -25,6 +25,7 @@ node('ubuntu-Appserver-3120')
     {
         docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_credentials')
         {
+            echo 'dockerhub_credentials'
          app.push("latest")
         }
     }
