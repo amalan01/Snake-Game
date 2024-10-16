@@ -26,7 +26,7 @@ pipeline {
       }
       steps {
         script {
-          def app = docker.build("amalan01/snake")
+          def app = docker.build("amalan01/snakegame1")
           app.tag("latest")
         }
       }
@@ -40,7 +40,7 @@ pipeline {
         script 
         {
           docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_credentials') 
-            def app = docker.image("amalan01/snake:latest")
+            def app = docker.image("amalan01/snakegame1:latest")
             app.push()
           
         }
