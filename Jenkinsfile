@@ -1,87 +1,65 @@
-pipeline 
-{
+pipeline {
   agent none
 
-  stages
-  {
-    stage('CLONE GIT REPOSITORY')
-    {
-      agent
-      {
+  stages {
+    stage('CLONE GIT REPOSITORY') {
+      agent {
         label 'ubuntu-Appserver-3120'
       }
-      steps 
-      {
+      steps {
         checkout scm
       }
     }
 
-    stage('SCA-SAST-SNYK-TEST')
-    {
-      agent
-      {
+    stage('SCA-SAST-SNYK-TEST') {
+      agent {
         label 'ubuntu-Appserver-3120'
       }
-      steps 
-      {
+      steps {
         echo "SNYK-TEST"
       }
     }
 
-     stage('BUILD-AND-TAG')
-    {
-      agent
-      {
+    stage('BUILD-AND-TAG') {
+      agent {
         label 'ubuntu-Appserver-3120'
       }
-      steps 
-      {
-         script 
-         {
-            def app = docker.build("amalan01/snake")
-            app.tag("latest")
-         }
+      steps {
+        script {
+          def app = docker.build("amalan01/snake")
+          app.tag("latest")
+        }
       }
     }
 
-      stage('POST-TO-DOCKERHUB')
-    {
-      agent
-      {
+    stage('POST-TO-DOCKERHUB') {
+      agent {
         label 'ubuntu-Appserver-3120'
       }
-      steps 
-      {
-         script 
-         {
-            docker.withRegistry("https://registry.hub.docker.com", "dockerhub_credentials")
-            {
-                def app = docker.image("amalan01/snake")
-                app.push("latest")
-
-            }
-            
-         }
+      steps {
+        script {
+          docker.withRegistry("https://registry.hub.docker.com", "dockerhub_credentials") {
+            def app = docker.image("amalan01/snake:latest")
+            app.push()
+          }
+        }
       }
     }
 
-    stage('DEPLOYMENT')
-    {
-      agent
-      {
+    stage('DEPLOYMENT') {
+      agent {
         label 'ubuntu-Appserver-3120'
       }
-      steps 
-      {
+      steps {
         sh "docker-compose down"
         sh "docker-compose up -d"
       }
     }
-
-    
-    
   }
-  
+
+  post {
+    always {
+      cleanWs()
+    }
+  }
 }
-
-
