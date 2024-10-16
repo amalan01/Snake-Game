@@ -2,10 +2,12 @@ version: '3.3'
 services:
   snake:
     image: 'amalan01/snakegame1:latest'
+    container_name: snake_app
     environment:
       - PORT=3000
     ports:
       - "80:3000"
     volumes:
       - ./:/app
+    restart: always
 
