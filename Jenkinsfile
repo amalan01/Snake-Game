@@ -11,10 +11,10 @@ node('ubuntu-Appserver-3120')
        agent {
          label 'ubuntu-Appserver-3120'
        }
-       steps {
+       
          echo "SNYK-TEST"
        }
-     }
+     
     stage('Build-and-Tag')
     {
         /* This builds the actual image; 
