@@ -37,11 +37,12 @@ pipeline {
         label 'ubuntu-Appserver-3120'
       }
       steps {
-        script {
-          docker.withRegistry("https://registry.hub.docker.com", "dockerhub_credentials") {
+        script 
+        {
+          docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_credentials') 
             def app = docker.image("amalan01/snake:latest")
             app.push()
-          }
+          
         }
       }
     }
@@ -57,9 +58,5 @@ pipeline {
     }
   }
 
-  post {
-    always {
-      cleanWs()
-    }
-  }
+ 
 }
