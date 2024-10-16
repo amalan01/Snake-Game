@@ -35,7 +35,7 @@ pipeline {
 
     stage('POST-TO-DOCKERHUB') {    
             agent {
-                label 'App-Server-CWEB2140'
+                label 'ubuntu-Appserver-3120'
             }
             steps {
                 script {
