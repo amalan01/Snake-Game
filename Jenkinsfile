@@ -26,21 +26,20 @@ pipeline {
        }
        steps {
          script {
-           // Declare and build the Docker image with the correct context and tag
+           // Build the Docker image and tag it correctly
            def app = docker.build("amalan01/snakegame1:latest", ".")
-           app.tag("latest")
          }
        }
      }
 
-     stage('POST-TO-DOCKERHUB') {
+     stage('POST-TO-DOCKERHUB') {    
        agent {
          label 'ubuntu-Appserver-3120'
        }
        steps {
          script {
            docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_credentials') {
-             // Push the previously built image
+             // Use the image built previously to push
              def app = docker.image("amalan01/snakegame1:latest")
              app.push()
            }
