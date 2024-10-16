@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   snake:
-    image: 'amalan01/snakegame1'
+    image: 'amalan01/snakegame1:latest'
     environment:
       - "PORT:3000"
     ports:
