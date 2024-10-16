@@ -26,8 +26,8 @@ pipeline {
       }
       steps {
         script {
-          def app = docker.build("amalan01/snakegame1")
-          app.tag("latest")
+          // Ensure Docker builds the image with the correct context and tag
+          def app = docker.build("amalan01/snakegame1:latest", ".")
         }
       }
     }
@@ -37,14 +37,12 @@ pipeline {
         label 'ubuntu-Appserver-3120'
       }
       steps {
-        script 
-        {
-          docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_credentials') 
-          {
+        script {
+          // Login and push to Docker Hub
+          docker.withRegistry('https://registry.hub.docker.com', 'dockerhub_credentials') {
             def app = docker.image("amalan01/snakegame1:latest")
             app.push()
           }
-          
         }
       }
     }
@@ -60,5 +58,9 @@ pipeline {
     }
   }
 
- 
+  post {
+    always {
+      cleanWs() // Clean workspace after the build to prevent clutter
+    }
+  }
 }
