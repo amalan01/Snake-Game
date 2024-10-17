@@ -15,7 +15,7 @@ pipeline {
 
         stage('SCA-SAST-SNYK-TEST') {
             agent {
-                label 'ubuntu-Appserver-31201' // Separate agent for this specific stage
+                label 'ubuntu-Appserver-3120' // Separate agent for this specific stage
             }
             steps {
                 echo "SNYK-TEST"
