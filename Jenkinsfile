@@ -19,7 +19,7 @@ node('ubuntu-Appserver-3120')
     {
         /* This builds the actual image; 
         * This is synonymous to docker build on the command line */
-        app =docker.build("amalan06/snakegame1")
+        app =docker.build("amalan01/snakegame1")
     }
     stage('Post-to-dockerhub')
     {
