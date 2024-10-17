@@ -26,7 +26,7 @@ pipeline {
             steps {
                 script {
                     // Build the Docker image
-                    def app = docker.build("amalan06/snakegame1")
+                    def app = docker.build("amalan01/snakegame1")
                 }
             }
         }
