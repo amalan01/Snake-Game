@@ -9,7 +9,7 @@ node('ubuntu-Appserver-3120')
 
       stage('SCA-SAST-SNYK-TEST') {
        agent {
-         label 'ubuntu-Appserver-31201'
+         label 'ubuntu-Appserver-3120'
        }
        
          echo "SNYK-TEST"
