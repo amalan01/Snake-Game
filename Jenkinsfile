@@ -7,12 +7,19 @@
     checkout scm
     }
 
-      stage('SCA-SAST-SNYK-TEST') {
-       agent {
+      stage('SCA-SAST-SNYK-TEST') 
+      {
+       agent 
+       
+       {
          label 'ubuntu-Appserver-3120'
        }
        
-         echo "SNYK-TEST"
+         snykSecurity(
+            snykInstallation: 'Snyk',
+            snykTokenId: 'Synkid',
+            severity: 'critical'
+         )
        }
      
     stage('Build-and-Tag')
@@ -37,7 +44,3 @@
     }
 
 }
-
-
-
-
