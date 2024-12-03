@@ -1,4 +1,4 @@
-
+#Replaced mhart/alpine-node with the official Node.js 18-alpine image to ensure it’s actively maintained.
 FROM node:18-alpine
 
 # Update apk-tools and ensure all packages are updated
